@@ -1,0 +1,35 @@
+<div class="ui comments pt-20" *ngIf="questionObject">
+  <div class="comment">
+    <a class="avatar" [href]="questionObject.owner.link">
+      <img
+        [src]="questionObject.owner.profile_image?questionObject.owner.profile_image:'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y'">
+    </a>
+    <div class="content">
+      <a class="author" [href]="questionObject.owner.link">{{questionObject.owner.display_name}} | {{
+        questionObject.owner.reputation }}</a>
+      <div class="metadata">
+        <!-- as unix time is in seconds converting into milliseconds to get actual date -->
+        <div class="date fs-12">{{ (questionObject.creation_date * 1000)|dateAgo }}</div>
+      </div>
+      <div class="text">
+        {{ questionObject.title }}
+      </div>
+      <div class="actions">
+        <a>
+          <div class="ui tiny label" *ngFor="let tag of questionObject.tags">
+            {{ tag }}
+          </div>
+        </a>
+        <a class="ui icon">
+          <i class="eye icon"></i>
+          {{ questionObject.view_count }}
+        </a>
+        <a [ngClass]="{'answered': questionObject.is_answered}" (click)="redirectToDetailPage()">
+          {{ questionObject.is_answered? 'answered': questionObject.answer_count > 1 ? 'answers': 'answer' }} {{
+          questionObject.answer_count }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui divider"></div>

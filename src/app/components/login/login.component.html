@@ -1,0 +1,166 @@
+<div class="ui sixteen wide center aligned column grid container mt-25">
+  <mat-card class="pad-2-10rem mb-10">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Login">
+        <div class="row mt-20">
+          <div class="sixteen wide column">
+            <img src="/assets/images/logo/ngStack-logo.png" alt="no image" class="image b-1 h-12rem">
+            <h1 class="ui header">
+              Welcome to ngStack
+            </h1>
+            <h4 class="ui header">
+              Please login with your account or signup
+            </h4>
+          </div>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="submitForm($event, 'login')" class="mt-10">
+          <div class="row">
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your email id
+                </mat-label>
+                <input type="email" matInput formControlName="email" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your password
+                </mat-label>
+                <input [type]="showPassword?'text':'password'" matInput formControlName="password" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+                <button mat-button matSuffix mat-icon-button type="button">
+                  <mat-icon (click)="togglePasswordVisibility($event)">
+                    {{!showPassword? 'visibility': 'visibility_off'}}
+                  </mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="column">
+              <button mat-stroked-button type="submit">
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab label="Signup">
+        <div class="row mt-20">
+          <div class="sixteen wide column">
+            <img src="/assets/images/logo/ngStack-logo.png" alt="no image" class="image b-1 h-12rem">
+            <h1 class="ui header">
+              Welcome to ngStack
+            </h1>
+            <h4 class="ui header">
+              Please Signup with your account or login
+            </h4>
+          </div>
+        </div>
+        <form [formGroup]="signupForm" (ngSubmit)="submitForm($event, 'signup')" class="mt-10">
+          <div class="row">
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your Name
+                </mat-label>
+                <input type="text" matInput formControlName="name" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your Mobile Number
+                </mat-label>
+                <input type="number" matInput formControlName="mobno" />
+                <mat-hint>
+                  Optional
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your email id
+                </mat-label>
+                <input type="email" matInput formControlName="email" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your password
+                </mat-label>
+                <input [type]="showSignupPassword?'text':'password'" matInput formControlName="password" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+                <button mat-button matSuffix mat-icon-button type="button">
+                  <mat-icon (click)="showSignupPassword =!showSignupPassword">
+                    {{!showSignupPassword? 'visibility': 'visibility_off'}}
+                  </mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field floatLabel="never" appearance="outline" class="w-100">
+                <mat-label>
+                  Enter your password again
+                </mat-label>
+                <input [type]="showSignupCPassword?'text':'password'" matInput formControlName="c_password" />
+                <mat-error>
+                  This field is required
+                </mat-error>
+                <mat-error *ngIf="signupForm.get('c_password').errors && signupForm.get('c_password').errors.mustMatch">
+                  Password must match
+                </mat-error>
+                <button mat-button matSuffix mat-icon-button type="button">
+                  <mat-icon (click)="showSignupCPassword =!showSignupCPassword">
+                    {{!showSignupCPassword? 'visibility': 'visibility_off'}}
+                  </mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="column">
+              <button mat-stroked-button type="submit">
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="row" *ngIf="signupError">
+      <div class="column">
+        <div class="ui negative message">
+          <i class="close icon" (click)="signupError = null"></i>
+          <div class="header">
+            {{signupError.message}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+</div>

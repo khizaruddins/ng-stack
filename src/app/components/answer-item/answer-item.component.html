@@ -1,0 +1,30 @@
+<div class="ui container">
+  <div class="ui comments">
+    <div class="comment">
+      <div class="content">
+        <a class="author" [href]="answerObject.owner.link">
+          <img class="ui mini circular image d-inline mr-10" [src]="answerObject.owner.profile_image">
+          <span>{{ answerObject.owner.display_name }} | {{
+            answerObject.owner.reputation }}</span>
+        </a>
+        <div class="text answerBody" [ngClass]="{'isAccepted': answerObject.is_accepted}"
+          [innerHTML]="answerObject.body">
+        </div>
+        <div class="actions">
+          <a class="save" *ngIf="answerObject.creation_date">
+            score
+            {{ answerObject.score }}
+          </a>
+          <a>Posted on: {{ (answerObject.creation_date * 1000)|dateAgo}}</a>
+          <a *ngIf="answerObject.last_activity_date">
+            Last active at: {{ (answerObject.last_activity_date * 1000)|dateAgo}}
+          </a>
+          <a *ngIf="answerObject.last_edit_date">
+            Edited at: {{ (answerObject.last_edit_date * 1000)|dateAgo }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui divider"></div>

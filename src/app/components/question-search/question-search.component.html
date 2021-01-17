@@ -1,0 +1,248 @@
+<div>
+  <form (submit)="submitForm($event)" [formGroup]="searchForm">
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Search for questions</mat-label>
+      <input matInput placeholder="Type something here..." formControlName="title" (keydown.enter)="submitForm($event)">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          </mat-panel-title>
+          <mat-panel-description>
+            <h3 class="ui header">
+              Toggle advanced search
+            </h3>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div>
+          <div class="ui six column container grid stackable">
+            <h3 class="ui header mb-0">Numerical input:</h3>
+            <div class="row mt-0 pt-0">
+              <div class="column">
+                <mat-form-field appearance="outline">
+                  <mat-label>Page number</mat-label>
+                  <input type="number" name="page" matInput formControlName="page" />
+                  <mat-error>
+                    Must be greater than 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="outline">
+                  <mat-label>
+                    Page size number | default:30
+                  </mat-label>
+                  <input type="number" name="pagesize" matInput formControlName="pagesize" />
+                  <mat-error>
+                    Must be greater than 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="outline">
+                  <mat-label>
+                    How many answers ?
+                  </mat-label>
+                  <input type="number" name="answers" matInput formControlName="answers" />
+                  <mat-error>
+                    Must be greater than 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="outline">
+                  <mat-label>
+                    How many views?
+                  </mat-label>
+                  <input type="number" name="views" matInput formControlName="views" />
+                  <mat-error>
+                    Must be greater than 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="outline">
+                  <mat-label>
+                    User id in number
+                  </mat-label>
+                  <input type="number" name="user" matInput formControlName="user" />
+                  <mat-error>
+                    Must be greater than 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <h3 class="ui header mb-0">Date input:</h3>
+            <div class="row mt-0 pt-0">
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input matInput formControlName="fromdate" (focus)="picker1.open()"
+                    (keydown.backspace)="$event.preventDefault()" (keydown)="$event.preventDefault()"
+                    [matDatepicker]="picker1" placeholder="From date" #inputPicker1>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <button mat-stroked-button *ngIf="inputPicker1.value"
+                  (click)="inputPicker1.value=''; searchForm.get('fromdate').patchValue(null)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input matInput formControlName="todate" (focus)="picker2.open()" (keydown)="$event.preventDefault()"
+                    (keydown.backspace)="$event.preventDefault()" [matDatepicker]="picker2" placeholder="To date"
+                    #inputPicker2>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <button mat-stroked-button *ngIf="inputPicker2.value"
+                  (click)="inputPicker2.value=''; searchForm.get('todate').patchValue(null)">
+                  <mat-icon>close</mat-icon>
+                </button>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input matInput formControlName="min" (focus)="picker3.open()"
+                    (keydown.backspace)="$event.preventDefault()" (keypress)="$event.preventDefault()"
+                    [matDatepicker]="picker3" placeholder="Min date" #inputPicker3>
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+                <button mat-stroked-button *ngIf="inputPicker3.value"
+                  (click)="inputPicker3.value=''; searchForm.get('min').patchValue(null)">
+                  <mat-icon>close</mat-icon>
+                </button>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input matInput formControlName="max" (focus)="picker4.open()"
+                    (keydown.backspace)="$event.preventDefault()" (keydown)="$event.preventDefault()"
+                    [matDatepicker]="picker4" placeholder="Max date" #inputPicker4>
+                  <mat-datepicker #picker4></mat-datepicker>
+                </mat-form-field>
+                <button mat-stroked-button *ngIf="inputPicker4.value"
+                  (click)="inputPicker4.value=''; searchForm.get('max').patchValue(null)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <h3 class="ui header mb-0">Selection:</h3>
+            <div class="row mt-0 pt-0">
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="order" placeholder="Select Order">
+                    <mat-option None>
+                      Order
+                    </mat-option>
+                    <mat-option *ngFor="let item of orderArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="accepted" placeholder="Select Accept">
+                    <mat-option None>Accepted</mat-option>
+                    <mat-option *ngFor="let item of booleanArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="sort" placeholder="Select Sort By">
+                    <mat-option None>Sort</mat-option>
+                    <mat-option *ngFor="let item of sortByArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="closed" placeholder="Select Closed">
+                    <mat-option None>Closed</mat-option>
+                    <mat-option *ngFor="let item of booleanArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="migrated" placeholder="Select Migrated">
+                    <mat-option None>Migrated</mat-option>
+                    <mat-option *ngFor="let item of booleanArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="notice" placeholder="Select Notice">
+                    <mat-option None>
+                      Notice
+                    </mat-option>
+                    <mat-option *ngFor="let item of booleanArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="wiki" placeholder="Select Wiki">
+                    <mat-option None>Wiki</mat-option>
+                    <mat-option *ngFor="let item of booleanArr" [value]="item">
+                      {{ item }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <h3 class="ui header mb-0">Text:</h3>
+            <div class="row mt-0 pt-0">
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input type="text" name="q" placeholder="Enter Query" matInput formControlName="q" />
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input type="text" name="body" placeholder="Enter body" matInput formControlName="body" />
+                </mat-form-field>
+
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input type="text" name="nottagged" placeholder="Not tagged" matInput formControlName="nottagged" />
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill">
+                  <input type="text" name="tagged" placeholder="Enter tagged" matInput formControlName="tagged" />
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill" class="w-95">
+                  <input type="text" name="url" placeholder="Enter stackoverflow url" matInput formControlName="url" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</div>

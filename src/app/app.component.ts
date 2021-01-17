@@ -1,4 +1,7 @@
+import { SharedService } from './shared/shared.service';
+import { OAuthService } from './oauth/oauth.service';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-stack';
+  constructor(
+  ) { }
+
+  ngOnInit(): void {
+  }
 }

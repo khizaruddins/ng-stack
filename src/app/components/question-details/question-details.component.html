@@ -1,0 +1,83 @@
+<div class="ui container">
+  <app-navigation [isLoggedInValue]="isLoggedInValue"></app-navigation>
+</div>
+<div class="ui container pt-20 mb-80">
+  <mat-card>
+    <div *ngIf="!isQuestionLoading && !isAnswerLoading">
+      <div *ngFor="let item of questionArr">
+        <div class="ui comments">
+          <div class="comment">
+            <div class="content">
+              <a class="author" [href]="item.owner.link">
+                <img class="ui mini circular image d-inline mr-10" [src]="item.owner.profile_image">
+                <span>
+                  {{ item.owner.display_name }} | {{ item.owner.reputation }}
+                </span>
+              </a>
+              <span>
+                <i class="calendar alternate outline icon"></i> {{ (item.creation_date * 1000)|dateAgo }}
+              </span>
+              <div class="text">
+                <h1 class="ui header">
+                  {{ item.title }}
+                </h1>
+              </div>
+              <div class="actions">
+                <a>
+                  <i class="eye icon"></i>
+                  {{ item.view_count }}
+                </a>
+                <a [ngClass]="{'answered': item.is_answered}">
+                  {{ item.is_answered? 'answered': item.answer_count > 1 ? 'answers': 'answer' }} {{
+                  item.answer_count }}
+                </a>
+                <a *ngIf="item.last_activity_date">
+                  Last active at: {{ (item.last_activity_date * 1000)|dateAgo }}
+                </a>
+                <a *ngIf="item.last_edit_date">
+                  Edited at: {{ (item.last_edit_date * 1000)|dateAgo}}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="answerBody" *ngIf="item.body" [innerHTML]="item.body"></div>
+          <div>
+            <h4 class="ui header mt-10">
+              Tags:
+            </h4>
+            <span class="ui tiny label" *ngFor="let tag of item.tags">
+              {{tag}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+    </div>
+    <div *ngIf="!isAnswerLoading && answerList.length>0">
+      <h3 class="ui header">
+        Answers:
+      </h3>
+      <app-answer-item [answer]="answer" *ngFor="let answer of answerList">
+      </app-answer-item>
+      <mat-card *ngIf="isAnswerLoading">
+        <div class="ui placeholder">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="isQuestionLoading">
+    <div class="ui placeholder">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+  </mat-card>
+</div>

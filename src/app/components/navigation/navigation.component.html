@@ -1,0 +1,11 @@
+<div class="ui menu stackable mb-25">
+  <div class="item">
+    <img src="/assets/images/logo/ngStack-logo.png" alt="no image" class="h-40">
+  </div>
+  <a class="item" routerLinkActive="active" routerLink="/">
+    Home
+  </a>
+  <a class="right item" *ngIf="isLoggedInValue" (click)="logout()">
+    Logout
+  </a>
+</div>

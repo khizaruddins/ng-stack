@@ -1,0 +1,9 @@
+.hide {
+  display: none;
+}
+
+::ng-deep .mat-paginator{
+  .mat-paginator-range-label{
+    display: none !important;
+  }
+}
