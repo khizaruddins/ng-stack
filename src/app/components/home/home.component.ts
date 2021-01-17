@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAccessToken() {
-    window.open(stackConfig.OAUTH_DIALOG + `?client_id=${stackConfig.clientId}&scope=read_inbox,private_info&redirect_uri=http://localhost:4200/oauth-redirect`)
+    window.open(stackConfig.OAUTH_DIALOG + `?client_id=${stackConfig.clientId}&scope=read_inbox,private_info&redirect_uri=https://ng-stack.web.app/oauth-redirect`)
   }
   logout() {
     this.loginService.logout();
