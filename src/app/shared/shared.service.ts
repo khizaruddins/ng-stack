@@ -24,7 +24,7 @@ export class SharedService {
     return this.triggeredSearchObs.asObservable();
   }
 
-  triggerSearchQuery(query: {}): void {
+  triggerSearchQuery(query: (boolean | {})): void {
     this.triggeredSearchObs.next(query);
   }
 

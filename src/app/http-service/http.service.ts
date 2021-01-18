@@ -29,9 +29,4 @@ export class HttpService {
     })
   }
 
-  post(url: string, params?: HttpParams): Observable<any> {
-    url = url.trim();
-    return this._http.post(url, params);
-  }
-
 }

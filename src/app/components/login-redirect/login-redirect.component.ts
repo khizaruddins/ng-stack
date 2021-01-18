@@ -1,3 +1,4 @@
+import { SharedService } from './../../shared/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,6 +12,7 @@ export class LoginRedirectComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private sharedService: SharedService
   ) { }
   activatedRouteSubs: Subscription;
 
@@ -28,6 +30,7 @@ export class LoginRedirectComponent implements OnInit {
       let todayDateMilliseconds = new Date().getTime();
       let accessTokenEndsIn = todayDateMilliseconds + parseInt(expiresIn) * 1000;
       localStorage.setItem('expiresIn', String(accessTokenEndsIn));
+      this.sharedService.triggerSearchQuery(true);
       window.close();
     })
   }

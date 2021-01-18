@@ -57,6 +57,7 @@ export class QuestionDetailsComponent implements OnInit {
   getDetailedQuestion() {
     let stackCredswithQuery = {
       ...stackCredsParams,
+      access_token: localStorage.getItem('token'),
       filter: 'withBody'
     }
     this.questionListService.getDetailedQuestionData(this.questionId, stackCredswithQuery)
@@ -76,6 +77,7 @@ export class QuestionDetailsComponent implements OnInit {
   getDetailAnswer() {
     let stackCredsParamsWithQuery = {
       ...stackCredsParams,
+      access_token: localStorage.getItem('token'),
       filter: 'withBody'
     }
     this.isAnswerLoading = true;

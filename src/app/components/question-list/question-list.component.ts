@@ -5,6 +5,7 @@ import { stackCredsParams } from './../../config/stack-config';
 import { QuestionListService } from './question-list.service';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-list',
@@ -15,7 +16,8 @@ export class QuestionListComponent implements OnInit {
 
   constructor(
     private questionListService: QuestionListService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private router: Router
   ) { }
 
   isLoading: boolean = false;
@@ -24,22 +26,43 @@ export class QuestionListComponent implements OnInit {
   canPaginate: boolean = false;
   questionList: QuestionList[] = [];
   searchTriggerSubs: Subscription;
+  prevQuery: boolean | {} = false;
+  existingQuery: any = {};
 
   ngOnInit(): void {
-    this.getQuestionList();
     this.initSearchTriggering();
+    if (localStorage.getItem('token') !== null) {
+      this.getQuestionList();
+    } else {
+      const interval = setInterval(() => {
+        if (localStorage.getItem('token') !== null) {
+          this.getQuestionList();
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
   }
 
   initSearchTriggering() {
-    this.searchTriggerSubs = this.sharedService.getTriggeredSearchQueryData().subscribe(query => {
-      this.getQuestionList(query);
-    })
+    this.searchTriggerSubs = this.sharedService.getTriggeredSearchQueryData()
+      .subscribe(query => {
+        if (query) {
+          if (typeof query === 'object') {
+            this.existingQuery = query;
+          }
+          if (this.prevQuery !== query) {
+            this.getQuestionList(query);
+          }
+          this.prevQuery = query;
+        }
+      })
   }
 
   getQuestionList(query?): void {
 
     let params = {
       ...stackCredsParams,
+      access_token: localStorage.getItem('token'),
       ...query
     };
     this.isLoading = true;
@@ -74,10 +97,16 @@ export class QuestionListComponent implements OnInit {
     const { pageIndex } = event;
     this.currentPageIndex = pageIndex + 1;
     this.questionList = [];
-    let query = {
-      page: this.currentPageIndex,
-      pageSize: 30
+
+    if (!!this.existingQuery.page) {
+      this.currentPageIndex = this.existingQuery.page + pageIndex;
     }
+    let query = {
+      ...this.existingQuery,
+      page: this.currentPageIndex,
+      pagesize: 30,
+    }
+
     this.getQuestionList(query)
     return event;
   }

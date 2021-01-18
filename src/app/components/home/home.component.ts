@@ -41,12 +41,6 @@ export class HomeComponent implements OnInit {
   checkForAccessToken(forcedCheck): void {
     if (localStorage.getItem('token') == null || forcedCheck) {
       this.getAccessToken();
-      const interval = setInterval(() => {
-        if (localStorage.getItem('token') !== null) {
-          this.sharedService.triggerSearchQuery({});
-          clearInterval(interval);
-        }
-      }, 500);
     } else {
       this.checkForTokenExpiry()
     }
@@ -54,7 +48,7 @@ export class HomeComponent implements OnInit {
 
   checkForTokenExpiry(): void {
     const dateToday = new Date().getTime();
-    if (localStorage.getItem('expiresIn')) {
+    if (localStorage.getItem('expiresIn') !== null) {
       const expiresIn = parseInt(localStorage.getItem('expiresIn'));
       if (dateToday > expiresIn) {
         this.checkForAccessToken(true);

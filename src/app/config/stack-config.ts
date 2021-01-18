@@ -10,7 +10,6 @@ export const stackConfig = {
 
 export const stackCredsParams = {
   key: stackConfig.API_KEY,
-  access_token: localStorage.getItem('token'),
   site: 'stackoverflow',
 }
 
