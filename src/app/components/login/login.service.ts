@@ -1,3 +1,4 @@
+import { SharedService } from './../../shared/shared.service';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -12,7 +13,8 @@ export class LoginService {
   constructor(
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) { }
   newUser: any;
   private authError = new BehaviorSubject<any>('');
@@ -30,6 +32,7 @@ export class LoginService {
         localStorage.setItem('loginStatus', 'true');
         this.router.navigate(['/']);
       }).catch((err) => {
+        this.sharedService.openSnackBar(err.message, "DISMISS")
         this.authError.next(err);
       });
   }
@@ -49,6 +52,7 @@ export class LoginService {
           .then(() => {
             this.router.navigate(['/'])
           }).catch(err => {
+            this.sharedService.openSnackBar(err.message, "DISMISS")
             return this.authError.next(err);
           });
 
