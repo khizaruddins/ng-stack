@@ -13,7 +13,7 @@
             </h4>
           </div>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="submitForm($event, 'login')" class="mt-10">
+        <form [formGroup]="loginForm" class="mt-10">
           <div class="row">
             <div class="column">
               <mat-form-field floatLabel="never" appearance="outline" class="w-100">
@@ -48,7 +48,7 @@
 
           <div class="row">
             <div class="column">
-              <button mat-stroked-button type="submit">
+              <button mat-stroked-button (click)="submitForm($event, 'login')">
                 Login
               </button>
             </div>
@@ -67,7 +67,7 @@
             </h4>
           </div>
         </div>
-        <form [formGroup]="signupForm" (ngSubmit)="submitForm($event, 'signup')" class="mt-10">
+        <form [formGroup]="signupForm" class="mt-10">
           <div class="row">
             <div class="column">
               <mat-form-field floatLabel="never" appearance="outline" class="w-100">
@@ -143,7 +143,7 @@
 
           <div class="row">
             <div class="column">
-              <button mat-stroked-button type="submit">
+              <button mat-stroked-button (click)="submitForm($event, 'signup')">
                 Sign Up
               </button>
             </div>

@@ -65,7 +65,9 @@ export class LoginComponent implements OnInit {
       case 'login':
         if (this.loginForm.valid) {
           const pass = btoa(this.loginForm.get('password').value)
-          this.loginService.login(this.loginForm.get('email').value, pass)
+          this.loginService.login(this.loginForm.get('email').value, pass);
+          this.loginForm.markAsPristine();
+          this.loginForm.markAsUntouched();
         }
         break;
       case 'signup':
@@ -74,7 +76,8 @@ export class LoginComponent implements OnInit {
             ...this.signupForm.value,
             password: btoa(this.signupForm.get('password').value)
           })
-          this.signupForm.reset({ emitEvent: false });
+          this.signupForm.markAsPristine();
+          this.signupForm.markAsUntouched();
         }
         break;
     }
