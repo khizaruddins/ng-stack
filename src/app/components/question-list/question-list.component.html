@@ -1,11 +1,22 @@
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && questionList.length>0">
   <app-question-item class="cursor-pointer" [question]="question" *ngFor="let question of questionList">
   </app-question-item>
+  <mat-paginator class="paginatorClass" [ngClass]="{'hide': isLoading}" [length]="1000" [pageSize]="1"
+    [hidePageSize]="true" (page)="!isLoading ? pageEvent=onPaginationChange($event):
+      $event.preventDefault()">
+  </mat-paginator>
 </div>
-<mat-paginator class="paginatorClass" [ngClass]="{'hide': isLoading}" [length]="1000" [pageSize]="1"
-  [hidePageSize]="true" (page)="!isLoading ? pageEvent=onPaginationChange($event):
-    $event.preventDefault()">
-</mat-paginator>
+
+<div class="ui info message" *ngIf="!isLoading && questionList.length === 0">
+  <i class="close icon"></i>
+  <div class="header">
+    No Data Found !!
+  </div>
+  <ul class="list">
+    <li>The keywords you are searching cannot be found!!</li>
+    <li> Try searching again</li>
+  </ul>
+</div>
 
 <div *ngIf="isLoading">
   <div class="ui placeholder">

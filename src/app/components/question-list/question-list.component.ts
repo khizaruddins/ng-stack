@@ -17,7 +17,6 @@ export class QuestionListComponent implements OnInit {
   constructor(
     private questionListService: QuestionListService,
     private sharedService: SharedService,
-    private router: Router
   ) { }
 
   isLoading: boolean = false;
@@ -50,16 +49,12 @@ export class QuestionListComponent implements OnInit {
           if (typeof query === 'object') {
             this.existingQuery = query;
           }
-          if (this.prevQuery !== query) {
-            this.getQuestionList(query);
-          }
-          this.prevQuery = query;
+          this.getQuestionList(query);
         }
       })
   }
 
   getQuestionList(query?): void {
-
     let params = {
       ...stackCredsParams,
       access_token: localStorage.getItem('token'),
@@ -68,12 +63,11 @@ export class QuestionListComponent implements OnInit {
     this.isLoading = true;
     this.questionListService.getQuestionListData(params)
       .subscribe(response => {
-        if (response) {
+        this.isLoading = false;
+        if (response && response.items.length > 0) {
           const { items, has_more } = response;
           this.canPaginate = has_more;
-
           this.questionList = items;
-          this.isLoading = false;
         } else {
           this.questionList = [];
         }
