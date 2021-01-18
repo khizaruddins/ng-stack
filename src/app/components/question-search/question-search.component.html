@@ -1,7 +1,7 @@
 <div>
   <form (submit)="submitForm($event)" [formGroup]="searchForm">
     <mat-form-field appearance="outline" class="d-block">
-      <mat-label>Search for questions</mat-label>
+      <mat-label>Search for questions and press enter</mat-label>
       <input matInput placeholder="Type something here..." formControlName="title" (keydown.enter)="submitForm($event)">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
     </mat-form-field>
